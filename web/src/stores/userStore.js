@@ -24,8 +24,15 @@ export const useUserStore = defineStore('user', {
     },
     async login(payload) {
       const res = await axios.post(BASE_URL, payload)
-      console.log("🚀 ~ file: userStore.js:27 ~ sendLogin ~ res:", res)
+      console.log("Login ~ res:", res)
       this.user = res.json()
-    }
+      this.hideLoginDialog()
+    },
+    async register(payload) {
+      const res = await axios.post(BASE_URL, payload)
+      console.log("register ~ res:", res)
+      this.user = res.json()
+      this.hideRegDialog()
+    },
   }
 })

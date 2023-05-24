@@ -73,11 +73,12 @@ const openRegDialog = () => {
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    margin: 15px 15px 0 15px;
+    margin: 0 15px;
     font-size: 16px;
 
     .text {
       margin: 0 auto 20px auto;
+      font-size: 18px;
     }
 
     .el-form-item:last-child {

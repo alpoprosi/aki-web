@@ -5,7 +5,7 @@
     </template>
     <div class="wrapper">
       <div class="text">
-        <span>Войдите, чтобы продолжить</span>
+        <span>Зарегистрируйтесь, чтобы продолжить</span>
       </div>
       <el-form>
         <el-form-item>
@@ -30,8 +30,17 @@
         </el-form-item>
         <template v-if="form.group === 'landlord'">
           <el-form-item>
+            <el-input v-model="form.jobtitle" placeholder="Ваша должность" />
+          </el-form-item>
+          <el-form-item>
+            <el-input v-model="form.legal" placeholder="Наименование юр. лица" />
+          </el-form-item>
+          <el-form-item>
+            <el-input v-model="form.inn" type="number" placeholder="Введите ИНН" />
+          </el-form-item>
+          <el-form-item>
             <el-select v-model="form.type" placeholder="Выберите категорию индустрии" size="large">
-              <el-option v-for="userType of types[form.group]" :key="userType.value" :value="userType.value"
+              <el-option v-for="userType of types" :key="userType.value" :value="userType.value"
                 :label="userType.label" />
             </el-select>
           </el-form-item>
@@ -65,10 +74,10 @@ const store = useUserStore()
 const form = ref({
   email: '',
   pass: '',
-  group: ''
+  group: 'tenant',
 })
 const confirm = () => {
-  console.log(form.value);
+  store.register()
 }
 const openLoginDialog = () => {
   store.hideRegDialog()
@@ -82,37 +91,33 @@ const groups = [
   // { value: 'admin', label: 'Администратор платформы' },
 ];
 const types = [
-  {
-    landlord: [
-      { value: 'landlordType1', label: 'Киностудии' },
-      { value: 'landlordType2', label: 'Галереи' },
-      { value: 'landlordType3', label: 'Издательства' },
-      { value: 'landlordType4', label: 'Книжные магазины' },
-      { value: 'landlordType5', label: 'Дизайн студии' },
-      { value: 'landlordType6', label: 'Владельцы креативных пространств' },
-      { value: 'landlordType7', label: 'Кинотеатры' },
-      { value: 'landlordType8', label: 'Звукозаписывающие студии' },
-      { value: 'landlordType9', label: 'AR/VR студии' },
-    ]
-  },
-  {
-    tenant: [
-      { value: 'tenantType1', label: 'Съемочная группа' },
-      { value: 'tenantType2', label: 'Продюсерская компания' },
-      { value: 'tenantType3', label: 'Дизайнер' },
-      { value: 'tenantType4', label: 'Оператор' },
-      { value: 'tenantType5', label: 'Музыкант' },
-      { value: 'tenantType6', label: 'Креативные агентства' },
-      { value: 'tenantType7', label: 'Кинокомпании' },
-      { value: 'tenantType8', label: 'Художник' },
-    ]
-  },
-  {
-    admin: [
-      { value: 'adminType', label: 'Сотрудник АНО “Агентство креативных индустрий”' }
-    ]
-  },
-];
+  { value: 'landlordType1', label: 'Киностудии' },
+  { value: 'landlordType2', label: 'Галереи' },
+  { value: 'landlordType3', label: 'Издательства' },
+  { value: 'landlordType4', label: 'Книжные магазины' },
+  { value: 'landlordType5', label: 'Дизайн студии' },
+  { value: 'landlordType6', label: 'Владельцы креативных пространств' },
+  { value: 'landlordType7', label: 'Кинотеатры' },
+  { value: 'landlordType8', label: 'Звукозаписывающие студии' },
+  { value: 'landlordType9', label: 'AR/VR студии' },
+]
+  // {
+  //   tenant: [
+  //     { value: 'tenantType1', label: 'Съемочная группа' },
+  //     { value: 'tenantType2', label: 'Продюсерская компания' },
+  //     { value: 'tenantType3', label: 'Дизайнер' },
+  //     { value: 'tenantType4', label: 'Оператор' },
+  //     { value: 'tenantType5', label: 'Музыкант' },
+  //     { value: 'tenantType6', label: 'Креативные агентства' },
+  //     { value: 'tenantType7', label: 'Кинокомпании' },
+  //     { value: 'tenantType8', label: 'Художник' },
+  //   ]
+  // },
+  // {
+  //   admin: [
+  //     { value: 'adminType', label: 'Сотрудник АНО “Агентство креативных индустрий”' }
+  //   ]
+  // },
 </script>
 
 <style lang="scss" scoped>
@@ -140,11 +145,12 @@ const types = [
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
-    margin: 15px 15px 0 15px;
+    margin: 0 15px;
     font-size: 16px;
 
     .text {
       margin: 0 auto 20px auto;
+      font-size: 18px;
     }
 
     .policy {
@@ -163,8 +169,7 @@ const types = [
       margin: 0;
     }
 
-    .el-button,
-    .el-input {
+    .el-button {
       width: 100%;
       color: $text;
       background-color: $accent;
@@ -180,7 +185,7 @@ const types = [
   }
 
   .el-input,
-  .el-select .el-input .el-input--suffix {
+  .el-select .el-input {
     height: 40px;
     width: 100%;
   }
