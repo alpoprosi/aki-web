@@ -52,12 +52,22 @@ a {
   border-radius: 7px;
 }
 
-.btn-outlined {
-  background-color: transparent;
-}
-
-button.active {
+.el-button.active {
   background-color: $accent;
   border: 1px solid $accent;
   color: $text;
+}
+
+.el-button.accent {
+  border: 1px solid $accent !important;
+  color: $text;
+}
+
+.btn-outlined {
+  background-color: transparent;
+  border-color: #C2C4C7;
+}
+
+.pointer {
+  cursor: pointer;
 }

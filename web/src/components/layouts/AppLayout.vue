@@ -35,11 +35,19 @@
         </div>
       </el-main>
       <el-footer class="footer">
-        <el-row class="wrapper">
+        <div class="wrapper">
           <div class="brand-logo">
-            <span>аки<span class="accent">.</span>арт<span class="accent">.</span>площадки</span>
+            <h1>аки<span class="accent">.</span>арт<span class="accent">.</span>площадки</h1>
           </div>
-        </el-row>
+          <div class="policy">
+            <a href="*" target="_blank" rel="noopener noreferrer">Политика конфиденциальности</a>
+            <a href="*" target="_blank" rel="noopener noreferrer">Пользовательское соглашение</a>
+          </div>
+        </div>
+        <div class="wrapper contacts">
+          <span>125009, Россия, Москва Вознесенский пер. 11. стр. 2</span>
+          <span>info@moscow-creative.ru</span>
+        </div>
       </el-footer>
     </el-container>
     <LoginForm v-if="userStore.isLoginDialogOpen" />
@@ -90,9 +98,37 @@ const search = () => {
 }
 
 .footer {
-  height: 90px;
-  padding: 0;
+  height: 156px;
+  margin-top: 12px;
+  padding: 30px 0;
   background-image: url(../../assets/img/background-header.svg);
+
+  .wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .policy {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+
+    a {
+      color: $text;
+      text-decoration: none;
+
+      &:first-child {
+        margin-bottom: 16px;
+      }
+    }
+  }
+
+  .contacts {
+    margin-top: 28px;
+    color: rgba($text, .5);
+    font-size: 14px;
+    font-weight: 300;
+  }
 }
 
 .wrapper {
