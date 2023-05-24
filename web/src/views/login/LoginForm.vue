@@ -9,10 +9,10 @@
       </div>
       <el-form>
         <el-form-item>
-          <el-input v-model="form.email" placeholder="Введите адрес элетронный почты" />
+          <el-input v-model="form.email" type="email" placeholder="Введите адрес элетронный почты" />
         </el-form-item>
         <el-form-item>
-          <el-input v-model="form.pass" placeholder="Введите пароль" />
+          <el-input v-model="form.pass" type="password" placeholder="Введите пароль" />
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="confirm">
@@ -40,11 +40,11 @@ const form = ref({
   pass: '',
 })
 const confirm = () => {
-  console.log(form.value);
+  store.login(form)
 }
 const openRegDialog = () => {
   store.hideLoginDialog()
-  store.openRegDialog()
+  store.showRegDialog()
 }
 </script>
 

@@ -1,58 +1,86 @@
 <template>
-  <LoginLayout>
-    <el-card class="box-card">
-      <template #header>
-        <div class="card-header">
-          <span>Registration</span>
-        </div>
-      </template>
-      <el-row>
-        <el-form :model="form" class="registration">
-          <el-form-item label="Name">
-            <el-input v-model="form.name" />
-          </el-form-item>
-          <el-form-item label="E-mail">
-            <el-input v-model="form.email" />
-          </el-form-item>
-          <el-form-item label="Group">
-            <el-select v-model="form.group" placeholder="Please select your group">
-              <el-option v-for="group of groups" :key="group.value" :value="group.value" :label="group.label" />
-            </el-select>
-          </el-form-item>
-          <el-form-item label="Type" v-if="form.group">
-            <el-select v-model="form.type" placeholder="Please select your type">
+  <el-dialog v-model="store.isRegDialogOpen" width="440" center :show-close="false" class="login-dialog">
+    <template #header>
+      <h1>аки<span class="accent">.</span>арт<span class="accent">.</span>площадки</h1>
+    </template>
+    <div class="wrapper">
+      <div class="text">
+        <span>Войдите, чтобы продолжить</span>
+      </div>
+      <el-form>
+        <el-form-item>
+          <el-input v-model="form.pass" placeholder="Введите ФИО" />
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form.email" type="email" placeholder="Введите адрес элетронный почты" />
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form.pass" type="tel" placeholder="Введите номер телефона" />
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form.pass" type="password" placeholder="Введите пароль" />
+        </el-form-item>
+        <el-form-item>
+          <el-input v-model="form.pass" type="password" placeholder="Подтвердите пароль" />
+        </el-form-item>
+        <el-form-item>
+          <el-select v-model="form.group" placeholder="Please select your group" size="large">
+            <el-option v-for="group of groups" :key="group.value" :value="group.value" :label="group.label" />
+          </el-select>
+        </el-form-item>
+        <template v-if="form.group === 'landlord'">
+          <el-form-item>
+            <el-select v-model="form.type" placeholder="Выберите категорию индустрии" size="large">
               <el-option v-for="userType of types[form.group]" :key="userType.value" :value="userType.value"
                 :label="userType.label" />
             </el-select>
           </el-form-item>
-          <el-form-item>
-            <el-space direction="horizontal">
-              <el-button type="primary" @click="onSubmit">Create</el-button>
-              <el-button>Cancel</el-button>
-              <router-link to="login">Login</router-link>
-            </el-space>
-          </el-form-item>
-        </el-form>
-      </el-row>
-    </el-card>
-  </LoginLayout>
+        </template>
+        <el-form-item>
+          <span class="policy">Регистрируясь, Вы соглашаетесь с <a href="#">политикой конфиденциальности</a> и <a
+              href="#">политикой в
+              отношении обработки персональных данных</a></span>
+        </el-form-item>
+
+        <el-form-item>
+          <el-button type="primary" @click="confirm">
+            Зарегистрироваться
+          </el-button>
+        </el-form-item>
+      </el-form>
+    </div>
+    <template #footer>
+      <div class="dialog-footer">
+        <span @click="openLoginDialog" class="pointer">Уже есть аккаунт?</span>
+      </div>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
-import { reactive } from 'vue'
-import LoginLayout from '../../components/layouts/LoginLayout.vue';
+import { useUserStore } from '../../stores/userStore'
+import { ref } from 'vue'
+const store = useUserStore()
 
-const form = reactive({
-  name: '',
+const form = ref({
   email: '',
-  group: null,
-  type: null,
-});
-const groups = reactive([
+  pass: '',
+  group: ''
+})
+const confirm = () => {
+  console.log(form.value);
+}
+const openLoginDialog = () => {
+  store.hideRegDialog()
+  store.showLoginDialog()
+}
+
+
+const groups = [
   { value: 'landlord', label: 'Арендодатель' },
   { value: 'tenant', label: 'Арендатор' },
-  { value: 'admin', label: 'Администратор платформы' },
-]);
+  // { value: 'admin', label: 'Администратор платформы' },
+];
 const types = [
   {
     landlord: [
@@ -85,21 +113,76 @@ const types = [
     ]
   },
 ];
-
-const onSubmit = () => {
-  console.log('submit!', form)
-}
 </script>
 
 <style lang="scss" scoped>
-.box-card {
-  margin: auto;
-  width: 480px;
-}
+@import '../../assets/styles/main.scss';
 
-.registration {
-  .el-form-item__label {
-    width: 100px !important;
+.login-dialog.el-dialog {
+  border-radius: 7px;
+
+  .el-dialog__header {
+    h1 {
+      margin: 20px 4px 0 20px;
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 50px;
+      color: $dark;
+    }
+
+    .accent {
+      color: $accent;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    margin: 15px 15px 0 15px;
+    font-size: 16px;
+
+    .text {
+      margin: 0 auto 20px auto;
+    }
+
+    .policy {
+      text-align: center;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+
+      a {
+        color: $accent;
+        text-decoration: none;
+      }
+    }
+
+    .el-form-item:last-child {
+      margin: 0;
+    }
+
+    .el-button,
+    .el-input {
+      width: 100%;
+      color: $text;
+      background-color: $accent;
+    }
+  }
+
+  .dialog-footer {
+    margin: 0 20px 20px 20px;
+    display: flex;
+    justify-content: center;
+    color: $accent;
+    font-size: 16px;
+  }
+
+  .el-input,
+  .el-select .el-input .el-input--suffix {
+    height: 40px;
+    width: 100%;
   }
 }
 </style>

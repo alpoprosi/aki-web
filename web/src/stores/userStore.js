@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { post } from 'axios'
+import axios from 'axios'
 
 const BASE_URL = ''
 
@@ -23,7 +23,7 @@ export const useUserStore = defineStore('user', {
       this.isRegDialogOpen = false
     },
     async login(payload) {
-      const res = await post(BASE_URL, payload)
+      const res = await axios.post(BASE_URL, payload)
       console.log("🚀 ~ file: userStore.js:27 ~ sendLogin ~ res:", res)
       this.user = res.json()
     }

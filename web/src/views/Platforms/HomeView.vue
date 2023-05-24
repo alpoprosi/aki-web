@@ -74,7 +74,6 @@ const setFilter = (val) => {
 .header {
   height: 100px;
   border-top: 1px solid $pale;
-
 }
 
 .wrapper {
