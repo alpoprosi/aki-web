@@ -15,6 +15,8 @@ import (
 	"golang.org/x/sys/unix"
 )
 
+var version = "?"
+
 func main() {
 	conf, err := config.New()
 	if err != nil {
