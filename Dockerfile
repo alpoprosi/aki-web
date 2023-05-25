@@ -7,7 +7,7 @@ ARG VERSION
 
 RUN apk update
 RUN apk add --no-cache git gcc musl-dev
-RUN go build -o /tmp/aki-web ./aki-web
+RUN go build -o /tmp/aki-web ./
 
 FROM node:18.16-alpine as builderJS
 ADD ./web /web
