@@ -18,9 +18,11 @@ RUN mv dist /tmp/dist
 
 FROM alpine:3.16
 ENV STATIC_PATH=/var/lib/aki-web/web/
+ENV CONFIG_YAML=/var/lib/aki-web/config.yaml
 
 COPY --from=builderjs /tmp/dist $STATIC_PATH
 COPY --from=builder /tmp/aki-web /usr/bin/aki-web
+COPY --from=builder /aki-web/config.yaml /var/lib/aki-web/config.yaml
 
 ENV HTTP_ADDR=0.0.0.0:8081
 EXPOSE 8081
