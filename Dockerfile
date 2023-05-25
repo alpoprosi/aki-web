@@ -24,6 +24,7 @@ COPY --from=builderjs /tmp/dist $STATIC_PATH
 COPY --from=builder /tmp/aki-web /usr/bin/aki-web
 COPY --from=builder /aki-web/config.yaml /var/lib/aki-web/config.yaml
 
-ENV HTTP_ADDR=0.0.0.0:8081
+ENV HTTP_ADDR=127.0.0.1
+ENV HTTP_PORT=8081
 EXPOSE 8081
 ENTRYPOINT ["/usr/bin/aki-web"]
