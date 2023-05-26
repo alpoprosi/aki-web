@@ -25,6 +25,6 @@ COPY --from=builder /tmp/aki-web /usr/bin/aki-web
 COPY --from=builder /aki-web/config-prod.yaml /var/lib/aki-web/config-prod.yaml
 
 ENV HTTP_ADDR=127.0.0.1
-ENV HTTP_PORT=8081
-EXPOSE 8081
+ENV HTTP_PORT=8080
+EXPOSE 8080
 ENTRYPOINT ["/usr/bin/aki-web"]
