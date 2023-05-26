@@ -7,7 +7,7 @@ ARG VERSION
 
 RUN apk update
 RUN apk add --no-cache git gcc musl-dev
-RUN go build -o /tmp/aki-web ./
+RUN go build -ldflags="-X 'main.version=${VERSION}-$(git rev-parse --short HEAD)'" -o /tmp/aki-web ./
 
 FROM node:18.16-alpine as builderjs
 ADD ./web /web
