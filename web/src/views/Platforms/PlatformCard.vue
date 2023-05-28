@@ -2,14 +2,16 @@
   <div class="space-card" :style="`background-image: url(${platform.imageUrl});`">
     <div class="wrapper">
       <header class="header">
-        <div class="company__type">{{ platform.type }}</div>
+        <div class="company__type">{{ platform.type?.label }}</div>
         <img :src="platform.logoImageUrl" class="company__logo" />
       </header>
       <div class="card-text">
         <p class="raiting">
           <i class="material-icons" style="font-size: 10px">star</i> {{ platform.raiting }}
         </p>
-        <h2 class="name">{{ platform.name }}</h2>
+        <h2 class="name">
+          <router-link :to="`/platforms/${platform.id}`">{{ platform.name }}</router-link>
+        </h2>
         <span>Гибкие мини-офисы, креативные студии</span>
         <span class="location"><i class="material-icons" style="font-size: 13px">pin_drop</i> {{ platform.location
         }}</span>
@@ -23,11 +25,9 @@
 </template>
 <script setup>
 import { defineProps } from 'vue'
-
 defineProps({
   platform: Object
 })
-
 </script>
 <style lang="scss" scoped>
 @import '../../assets/styles/main.scss';
@@ -37,6 +37,7 @@ defineProps({
   width: 300px;
   height: 366px;
   border-radius: 7px;
+  text-shadow: 1px 1px $dark;
 
   .wrapper {
     position: relative;
@@ -105,6 +106,10 @@ defineProps({
 
       .name {
         margin: 10px 0;
+
+        a {
+          text-decoration: none;
+        }
       }
 
       .location {
