@@ -1,32 +1,33 @@
 <template>
   <div class="list">
-    <PlatformCard v-for="i of 5" :key="`card-${i}`" class="card" :platform="platform" />
+    <PlatformCard v-for="platform of store.list" :key="platform.id" class="card" :platform="platform" />
   </div>
   <footer class="footer">
-    <el-button class="show-more-btn btn-outlined accent">Показать ещё</el-button>
+    <el-button class="show-more-btn btn-outlined accent" @click="getNextPage" :loading="loading">Показать ещё</el-button>
   </footer>
 </template>
 <script setup>
 import PlatformCard from './PlatformCard.vue';
+import { usePlatformStore } from '../../stores/platformStore';
 import { ref } from 'vue'
 
-const platform = ref({
-  name: 'Flacon space',
-  type: 'креативные пространства',
-  logoImageUrl: 'https://placehold.jp/ffffff/ffffff/30x30.png',
-  imageUrl: 'https://placehold.jp/300x366.png',
-  raiting: 4.8,
-  price: 4000,
-  reserve: 'за 2 часа',
-  location: 'ул. Большая Новодмитровская, 36'
-})
+const store = usePlatformStore()
+const page = ref(1)
+const loading = ref(false)
+
+const getNextPage = () => {
+  page.value += 1;
+  loading.value = true;
+  store.getPlatforms(page.value)
+  loading.value = false;
+}
 </script>
 <style lang="scss" scoped>
 @import '../../assets/styles/main.scss';
 
 .list {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
 
   .card {

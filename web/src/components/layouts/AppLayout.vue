@@ -4,7 +4,9 @@
       <el-header class="header">
         <el-row class="wrapper">
           <el-col class="brand-logo" :span="8">
-            <h1>аки<span class="accent">.</span>арт<span class="accent">.</span>площадки</h1>
+            <router-link to="/" class="brand-logo__link">
+              <h1>аки<span class="accent">.</span>арт<span class="accent">.</span>площадки</h1>
+            </router-link>
           </el-col>
           <el-col :span="12">
             <el-input v-model="searchText" placeholder="Что вы ищите?" class="outlined search">
@@ -14,17 +16,9 @@
             </el-input>
           </el-col>
           <el-col :span="4" class="account">
-            <el-dropdown trigger="click">
-              <el-button type="primary" class="btn">
-                <span class="material-icons md-18">person</span>
-              </el-button>
-              <template #dropdown>
-                <el-dropdown-menu>
-                  <el-dropdown-item @click="userStore.showLoginDialog">Login</el-dropdown-item>
-                  <el-dropdown-item @click="userStore.showRegDialog">Create account</el-dropdown-item>
-                </el-dropdown-menu>
-              </template>
-            </el-dropdown>
+            <el-button type="primary" class="btn" @click="userStore.showLoginDialog">
+              <span class="material-icons md-18">person</span>
+            </el-button>
           </el-col>
         </el-row>
         <slot name="header" />
@@ -65,9 +59,7 @@ const userStore = useUserStore()
 
 const searchText = ref('')
 
-const search = () => {
-  console.log('submit!', searchText.value)
-}
+const search = () => { }
 </script>
 
 <style lang="scss" scoped>
@@ -88,7 +80,7 @@ const search = () => {
 }
 
 .header {
-  height: 190px;
+  height: fit-content;
   padding: 0;
   background-image: url(../../assets/img/background-header.svg);
 
@@ -136,12 +128,16 @@ const search = () => {
   margin: 0 auto;
 
   .brand-logo {
+    &__link {
+      text-decoration: none;
+    }
+
     h1 {
       font-size: 40px;
       font-weight: 700;
       font-style: normal;
       line-height: 50px;
-      margin: auto;
+      margin: auto 0;
     }
 
     .accent {

@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Platforms/HomeView.vue'
-import Login from '../views/login/LoginForm.vue'
-import Register from '../views/login/RegisterForm.vue'
+import PlatformPage from '../views/Platforms/PlatformPage.vue'
 
 // import { useAuthStore, useAlertStore } from '../stores';
 
@@ -14,14 +13,9 @@ const router = createRouter({
       component: Home,
     },
     {
-      path: '/login',
-      name: 'login',
-      component: Login,
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: Register,
+      path: '/platforms/:id',
+      name: 'platform-page',
+      component: PlatformPage,
     }
   ]
 })

@@ -5,8 +5,8 @@
         <el-col>
           <div class="wrapper">
             <el-space :size="10">
-              <div v-for="category in categories" :key="category.value">
-                <el-button class="btn-outlined" :class="{ 'active': category.value === activeCategory }"
+              <div v-for="(category, index) in platformStore.categories" :key="category.value">
+                <el-button class="btn-outlined" :class="{ 'active': index === platformStore.activeCategoryIndex }"
                   @click="setFilter(category.value)">
                   <template #icon>
                     <span class="material-icons md-18">design_services</span>
@@ -47,26 +47,21 @@
 </template>
 <script setup>
 import AppLayout from '../../components/layouts/AppLayout.vue';
-import { ref } from 'vue';
 import PlatformssList from './PlatformsList.vue';
 
+import { ref } from 'vue';
+import { usePlatformStore } from '../../stores/platformStore.js'
+import { onMounted } from "vue";
+
+const platformStore = usePlatformStore();
 const viewType = ref('list');
-const activeCategory = ref('All');
-const categories = [
-  { value: 'All', label: 'Все площадки' },
-  { value: 'landlordType1', label: 'Киностудии' },
-  { value: 'landlordType5', label: 'Дизайн студии' },
-  { value: 'landlordType2', label: 'Галереи' },
-  { value: 'landlordType3', label: 'Издательства' },
-  { value: 'landlordType4', label: 'Книжные магазины' },
-  { value: 'landlordType7', label: 'Кинотеатры' },
-  { value: 'landlordType8', label: 'Звукозаписывающие студии' },
-  { value: 'landlordType6', label: 'Креативные пространства' },
-  { value: 'landlordType9', label: 'AR/VR студии' },
-]
 const setFilter = (val) => {
-  activeCategory.value = val;
+  platformStore.setCategory(val);
 };
+onMounted(() => {
+  platformStore.getTotal()
+  platformStore.getPlatforms(1);
+});
 </script>
 <style lang="scss" scoped>
 @import '../../assets/styles/main.scss';
